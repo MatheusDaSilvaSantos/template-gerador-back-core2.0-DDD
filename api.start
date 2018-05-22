@@ -109,7 +109,8 @@ namespace <#namespace#>.Api
                 // UI strings that we have localized.
                 SupportedUICultures = supportedCultures
             });
-
+        	
+			app.UseAuthentication();
             app.AddTokenMiddleware();
             app.UseMvc();
 	    	app.UseCors("AllowAnyOrigin");
