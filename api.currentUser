@@ -51,7 +51,7 @@ namespace <#namespace#>.Api.Controllers
 
         }
 	
-	[HttpGet("IsAuth")]
+		[HttpGet("IsAuth")]
         public async Task<IActionResult> IsAuth()
         {
             var result = new HttpResult<dynamic>(this._logger);
