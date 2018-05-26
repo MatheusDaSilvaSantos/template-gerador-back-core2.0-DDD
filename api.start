@@ -111,7 +111,7 @@ namespace <#namespace#>.Api
             });
         	
 			app.UseAuthentication();
-            app.AddTokenMiddleware();
+            app.AddTokenMiddlewareCustom;
             app.UseMvc();
 	    	app.UseCors("AllowAnyOrigin");
             AutoMapperConfig<#contextName#>.RegisterMappings();
