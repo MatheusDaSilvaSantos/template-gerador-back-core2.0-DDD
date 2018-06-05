@@ -32,7 +32,8 @@ namespace Seed.CrossCuting
 
         private static string GetRole(Dictionary<string, object> _claims)
         {
-            return _claims.Where(_ => _.Key == "role").SingleOrDefault().Value.ToString();
+            var role = _claims.Where(_ => _.Key == "role").SingleOrDefault();
+            return role.Value.IsNotNull() ? role.Value.ToString() : "--";
         }
 
         public static Dictionary<string, object> ClaimsForAdmin()
