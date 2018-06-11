@@ -13,6 +13,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Common.API.Extensions;
 using System.Collections.Generic;
+using Seed.CrossCuting;
 
 namespace <#namespace#>.Api
 {
@@ -111,7 +112,7 @@ namespace <#namespace#>.Api
             });
         	
 			app.UseAuthentication();
-            app.AddTokenMiddlewareCustom;
+            app.AddTokenMiddlewareCustom();
             app.UseMvc();
 	    	app.UseCors("AllowAnyOrigin");
             AutoMapperConfig<#contextName#>.RegisterMappings();
