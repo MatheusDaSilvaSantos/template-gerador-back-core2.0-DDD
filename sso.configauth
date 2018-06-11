@@ -103,7 +103,7 @@ namespace Sso.Server.Api
                     AllowAccessTokensViaBrowser = true,
 
 					RedirectUris = settings.RedirectUris.ToList(),
-                    PostLogoutRedirectUris =  { settings.PostLogoutRedirectUris },
+                    PostLogoutRedirectUris =  settings.PostLogoutRedirectUris.ToList() ,
                     AllowedCorsOrigins =  settings.ClientAuthorityEndPoint.ToList(),
 
                     AllowedScopes =
