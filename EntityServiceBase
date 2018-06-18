@@ -99,8 +99,11 @@ namespace <#namespace#>.Domain.Services
         {
             <#classNameLower#> = this.SaveDefault(<#classNameLower#>, <#classNameLower#>Old);
 
-			if (this._validationResult.IsNotNull() && !this._validationResult.IsValid)
-				return <#classNameLower#>;
+			if (!<#classNameLower#>.IsValid())
+            {
+                this._validationResult = <#classNameLower#>.GetDomainValidation();
+                return <#classNameLower#>;
+            }
 
             this._validationResult = new ValidationSpecificationResult
             {
