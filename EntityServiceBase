@@ -98,12 +98,12 @@ namespace <#namespace#>.Domain.Services
         protected override <#className#> SaveWithOutValidation(<#className#> <#classNameLower#>, <#className#> <#classNameLower#>Old)
         {
             <#classNameLower#> = this.SaveDefault(<#classNameLower#>, <#classNameLower#>Old);
+			this._cacheHelper.ClearCache();
 
+			this._validationResult = <#classNameLower#>.GetDomainValidation();
+			this._validationWarning = <#classNameLower#>.GetDomainWarning();
 			if (!<#classNameLower#>.IsValid())
-            {
-                this._validationResult = <#classNameLower#>.GetDomainValidation();
                 return <#classNameLower#>;
-            }
 
             this._validationResult = new ValidationSpecificationResult
             {
@@ -111,10 +111,8 @@ namespace <#namespace#>.Domain.Services
                 IsValid = true,
                 Message = "Alterado com sucesso."
             };
-
-            this._cacheHelper.ClearCache();
+            
             return <#classNameLower#>;
-
         }
 
 		protected override <#className#> SaveWithValidation(<#className#> <#classNameLower#>, <#className#> <#classNameLower#>Old)
@@ -122,11 +120,10 @@ namespace <#namespace#>.Domain.Services
             if (!this.DataAnnotationIsValid())
                 return <#classNameLower#>;
 
-            if (!<#classNameLower#>.IsValid())
-            {
-                this._validationResult = <#classNameLower#>.GetDomainValidation();
-                return <#classNameLower#>;
-            }
+			this._validationResult = <#classNameLower#>.GetDomainValidation();
+			this._validationWarning = <#classNameLower#>.GetDomainWarning();
+			if (!<#classNameLower#>.IsValid())
+				return <#classNameLower#>;
 
             this.Specifications(<#classNameLower#>);
 
@@ -134,7 +131,12 @@ namespace <#namespace#>.Domain.Services
                 return <#classNameLower#>;
             
             <#classNameLower#> = this.SaveDefault(<#classNameLower#>, <#classNameLower#>Old);
-            this._validationResult.Message = "Inserido com sucesso.";
+            this._validationResult = new ValidationSpecificationResult
+            {
+                Errors = new List<string>(),
+                IsValid = true,
+                Message = "Inserido com sucesso."
+            };
 
             this._cacheHelper.ClearCache();
             return <#classNameLower#>;
@@ -142,8 +144,8 @@ namespace <#namespace#>.Domain.Services
 
 		protected virtual void Specifications(<#className#> <#classNameLower#>)
         {
-            this._validationResult  = new <#className#>AptoParaCadastroValidation(this._rep).Validate(<#classNameLower#>);
-			this._validationWarning  = new <#className#>AptoParaCadastroWarning(this._rep).Validate(<#classNameLower#>);
+            this._validationResult  = this._validationResult.Merge(new <#className#>IsSuitableValidation(this._rep).Validate(<#classNameLower#>));
+			this._validationWarning  = this._validationWarning.Merge(new <#className#>IsSuitableWarning(this._rep).Validate(<#classNameLower#>));
         }
 
         protected virtual <#className#> SaveDefault(<#className#> <#classNameLower#>, <#className#> <#classNameLower#>Old)

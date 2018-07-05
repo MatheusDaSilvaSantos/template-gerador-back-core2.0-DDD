@@ -1,14 +1,16 @@
 ﻿using Common.Validation;
 using <#namespace#>.Domain.Entitys;
 using <#namespace#>.Domain.Interfaces.Repository;
+using <#namespace#>.Domain.Specifications;
+using System;
 
 namespace <#namespace#>.Domain.Validations
 {
-    public class <#className#>AptoParaCadastroValidation : ValidatorSpecification<<#className#>>
+    public class <#className#>IsSuitableValidation : ValidatorSpecification<<#className#>>
     {
-        public <#className#>AptoParaCadastroValidation(I<#className#>Repository rep)
+        public <#className#>IsSuitableValidation(I<#className#>Repository rep)
         {
-            //base.Add(Guid.NewGuid().ToString(), new Rule<<#className#>>(Instance of RuleClassName,"message for user"));
+            //base.Add(Guid.NewGuid().ToString(), new Rule<<#className#>>(Instance of is suitable,"message for user"));
         }
 
     }

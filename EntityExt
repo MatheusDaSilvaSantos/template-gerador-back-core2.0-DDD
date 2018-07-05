@@ -28,9 +28,7 @@ namespace <#namespace#>.Domain.Entitys
 
         public bool IsValid()
         {
-            base._validationResult = new <#className#>EstaConsistenteValidation().Validate(this);
-            return base._validationResult.IsValid;
-
+            return base._validationResult.Merge(new <#className#>IsConsistentValidation().Validate(this)).IsValid;
         }
         
     }
