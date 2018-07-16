@@ -1,7 +1,6 @@
 ﻿using Common.Validation;
 using <#namespace#>.Domain.Entitys;
 using <#namespace#>.Domain.Interfaces.Repository;
-using <#namespace#>.Domain.Specifications;
 using System;
 
 namespace <#namespace#>.Domain.Validations
