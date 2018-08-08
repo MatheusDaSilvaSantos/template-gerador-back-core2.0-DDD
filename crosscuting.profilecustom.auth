@@ -1,3 +1,4 @@
+using Common.Domain.Enums;
 using Common.Domain.Model;
 using IdentityModel;
 using Newtonsoft.Json;
@@ -19,7 +20,7 @@ namespace Seed.CrossCuting
             Owner = 3,
         }
 
-        public static Dictionary<string, object> Claims(Dictionary<string, object> _claims)
+        public static Dictionary<string, object> Claims(Dictionary<string, object> _claims, CurrentUser currentUser)
         {
 
             var role = GetRole(_claims);
@@ -52,9 +53,9 @@ namespace Seed.CrossCuting
         public static Dictionary<string, object> ClaimsForTenant(int tenantId, string name, string email)
         {
 
-            var tools = new List<dynamic>
+            var tools = new List<Tool>
             {
-                new { Icon = "fa fa-edit", Name = "Tool", Route = "#/Url" },
+                new Tool { Icon = "fa fa-edit", Name = "Tool", Route = "#/Url", Key="Tool" },
             };
 
             var _toolsForSubscriber = JsonConvert.SerializeObject(tools);
