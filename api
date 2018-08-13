@@ -29,6 +29,7 @@ namespace <#namespace#>.Api.Controllers
 			this._env = env;
         }
 
+		[Authorize(Policy = "CanRead")]
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery]<#className#>Filter filters)
         {
@@ -51,7 +52,7 @@ namespace <#namespace#>.Api.Controllers
         [HttpGet("{id}")]
 <#ApiGet#>
 
-
+        [Authorize(Policy = "CanWrite")]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]<#className#>DtoSpecialized dto)
         {
@@ -69,7 +70,7 @@ namespace <#namespace#>.Api.Controllers
         }
 
 
-
+		[Authorize(Policy = "CanWrite")]
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]<#className#>DtoSpecialized dto)
         {
@@ -86,7 +87,7 @@ namespace <#namespace#>.Api.Controllers
             }
         }
 
-
+		[Authorize(Policy = "CanDelete")]
         [HttpDelete]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(<#KeyType#> id, <#className#>Dto dto)
