@@ -10,10 +10,9 @@ namespace <#namespace#>.Domain.Entitys
         {
 
         }
-        public <#className#>Base(<#parametersRequired#>)
-        {
-<#initParametersRequired#>
-        }
+
+		<#ctorparametersRequiredBase#>
+
 
 		public class <#className#>FactoryBase
         {

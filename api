@@ -49,7 +49,6 @@ namespace <#namespace#>.Api.Controllers
         }
 
 
-        [HttpGet("{id}")]
 <#ApiGet#>
 
         [Authorize(Policy = "CanWrite")]
@@ -95,7 +94,7 @@ namespace <#namespace#>.Api.Controllers
             var result = new HttpResult<<#className#>Dto>(this._logger);
             try
             {
-				if (id.IsSent()) dto.<#KeyName#> = id;
+				<#setId#>
                 await this._app.Remove(dto);
                 return result.ReturnCustomResponse(this._app, dto);
             }

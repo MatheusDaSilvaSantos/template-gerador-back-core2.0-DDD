@@ -12,11 +12,8 @@ namespace <#namespace#>.Domain.Entitys
 
         }
 
-        public <#className#>(<#parametersRequired#>) :
-            base(<#parametersRequiredToBase#>)
-        {
+		<#ctorparametersRequired#>
 
-        }
 
 		public class <#className#>Factory : <#className#>FactoryBase
         {

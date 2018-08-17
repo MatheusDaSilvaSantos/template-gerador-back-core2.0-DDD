@@ -44,7 +44,7 @@ namespace <#namespace#>.Data.Repository
         {
             var querybase = await this.ToListAsync(this.GetBySimplefilters(filters).Select(_ => new
             {
-                Id = _.<#KeyName#>,
+                Id = _.<#DataItemFieldId#>,
 				Name = _.<#DataItemFieldName#>
             })); 
 
@@ -55,7 +55,7 @@ namespace <#namespace#>.Data.Repository
         {
             var querybase = await this.ToListAsync(this.GetBySimplefilters(filters).Select(_ => new
             {
-                Id = _.<#KeyName#>,
+                Id = _.<#DataItemFieldId#>
 
             }));
 
@@ -67,7 +67,7 @@ namespace <#namespace#>.Data.Repository
         {
             var querybase = await this.PagingDataListCustom<dynamic>(filters, this.GetBySimplefilters(filters).Select(_ => new
             {
-                Id = _.<#KeyName#>,
+                Id = _.<#DataItemFieldId#>
             }));
             return querybase;
         }
@@ -76,7 +76,7 @@ namespace <#namespace#>.Data.Repository
         {
             var querybase = await this.ToListAsync(this.GetBySimplefilters(filters).Select(_ => new
             {
-                Id = _.<#KeyName#>,
+               Id = _.<#DataItemFieldId#>
 
             }));
 
@@ -97,27 +97,15 @@ namespace <#namespace#>.Data.Repository
 
         protected override IQueryable<dynamic> DefineFieldsGetByFilters(IQueryable<<#className#>> source, FilterBase filters)
         {
-            if (filters.QueryOptimizerBehavior == "queryOptimizerBehavior")
+			if (filters.QueryOptimizerBehavior == "queryOptimizerBehavior")
             {
-                //if (!filters.IsOrderByDomain)
-                //{
-                //    return source.Select(_ => new
-                //    {
-                //        Id = _.<#className#>Id
-                //    }).OrderBy(_ => _.Id);
-                //}
-
                 return source.Select(_ => new
                 {
-                    //Id = _.<#className#>Id
+
                 });
-
             }
-
-            //if (!filters.IsOrderByDomain)
-            //    return source.OrderBy(_ => _.<#className#>Id);
-
             return source;
+
         }
 
         protected override IQueryable<<#className#>> MapperGetByFiltersToDomainFields(IQueryable<<#className#>> source, IEnumerable<dynamic> result, string queryOptimizerBehavior)
