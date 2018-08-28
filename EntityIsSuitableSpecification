@@ -1,6 +1,6 @@
 ﻿using Common.Validation;
-using Seed.Domain.Entitys;
-using Seed.Domain.Interfaces.Repository;
+using <#namespace#.Domain.Entitys;
+using <#namespace#.Domain.Interfaces.Repository;
 
 namespace <#namespace#>.Domain.Specifications
 {
