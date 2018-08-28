@@ -117,18 +117,8 @@ namespace <#namespace#>.Domain.Services
 
 		protected override <#className#> SaveWithValidation(<#className#> <#classNameLower#>, <#className#> <#classNameLower#>Old)
         {
-            if (!this.DataAnnotationIsValid())
-                return <#classNameLower#>;
-
-			this._validationResult = <#classNameLower#>.GetDomainValidation();
-			this._validationWarning = <#classNameLower#>.GetDomainWarning();
-			if (!<#classNameLower#>.IsValid())
+            if (!this.IsValid(<#classNameLower#>))
 				return <#classNameLower#>;
-
-            this.Specifications(<#classNameLower#>);
-
-            if (!this._validationResult.IsValid)
-                return <#classNameLower#>;
             
             <#classNameLower#> = this.SaveDefault(<#classNameLower#>, <#classNameLower#>Old);
             this._validationResult = new ValidationSpecificationResult
@@ -140,6 +130,30 @@ namespace <#namespace#>.Domain.Services
 
             this._cacheHelper.ClearCache();
             return <#classNameLower#>;
+        }
+		
+		protected virtual bool IsValid(<#className#> entity)
+        {
+            var isValid = true;
+            if (!this.DataAnnotationIsValid())
+            {
+                this._validationResult = entity.GetDomainValidation();
+                this._validationWarning = entity.GetDomainWarning();
+                isValid = false;
+            }
+
+            if (!entity.IsValid())
+            {
+                this._validationResult = entity.GetDomainValidation();
+                this._validationWarning = entity.GetDomainWarning();
+                isValid = false;
+            }
+
+            this.Specifications(entity);
+            if (!this._validationResult.IsValid)
+                isValid = false;
+
+            return isValid;
         }
 
 		protected virtual void Specifications(<#className#> <#classNameLower#>)
