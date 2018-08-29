@@ -100,10 +100,12 @@ namespace <#namespace#>.Domain.Services
             <#classNameLower#> = this.SaveDefault(<#classNameLower#>, <#classNameLower#>Old);
 			this._cacheHelper.ClearCache();
 
-			this._validationResult = <#classNameLower#>.GetDomainValidation();
-			this._validationWarning = <#classNameLower#>.GetDomainWarning();
 			if (!<#classNameLower#>.IsValid())
-                return <#classNameLower#>;
+			{
+				this._validationResult = <#classNameLower#>.GetDomainValidation();
+				this._validationWarning = <#classNameLower#>.GetDomainWarning();
+				return <#classNameLower#>;
+			}
 
             this._validationResult = new ValidationSpecificationResult
             {
