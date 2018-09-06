@@ -79,7 +79,7 @@ namespace Sso.Server.Api
             {
                 new Client
                 {
-                    ClientId = "<#contextName#>",
+                    ClientId = "<#namespace#>",
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     ClientSecrets =
                     {
@@ -96,7 +96,7 @@ namespace Sso.Server.Api
 
 				new Client
                 {
-                    ClientId = "<#contextName#>-spa",
+                    ClientId = "<#namespace#>-spa",
                     ClientSecrets = { new Secret("segredo".Sha256()) },
 
                     AllowedGrantTypes = GrantTypes.Implicit,
