@@ -13,7 +13,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Common.API.Extensions;
 using System.Collections.Generic;
-using <#namespace#.CrossCuting;
+using <#namespace#>.CrossCuting;
 
 namespace <#namespace#>.Api
 {
