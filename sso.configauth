@@ -115,6 +115,45 @@ namespace Sso.Server.Api
                     },
 					RequireConsent = false,
                     AccessTokenLifetime = 43200
+                },
+				new Client
+                {
+                    ClientId = "hangfire-dash",
+                    ClientName = "HangFire Dashboard",
+                    ClientSecrets = { new Secret("segredo".Sha256()) },
+
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+                    RedirectUris = {
+                        "http://localhost:8123/signin-oidc",
+                    },
+
+                     AllowedScopes = {
+                        StandardScopes.OpenId,
+                        StandardScopes.Profile,
+                        StandardScopes.Email,
+                        "ssosa"
+                    },
+                    RequireConsent = false,
+                    AccessTokenLifetime = 43200
+                },
+                new Client
+                {
+                    ClientId = "hangfire-api",
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    ClientSecrets = {
+                        new Secret("segredo".Sha256())
+                    },
+                    AllowedScopes = {
+                        StandardScopes.OpenId,
+                        StandardScopes.Profile,
+                        StandardScopes.Email,
+                        "ssosa"
+                    },
+                    Claims = new List<Claim>{
+                        new Claim(JwtClaimTypes.Subject,"991")
+                    },
+                    AccessTokenLifetime = 43200
                 }
           
             };
