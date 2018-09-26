@@ -88,6 +88,35 @@ namespace <#namespace#>.Api
 
 			//Policys
             services.AddAuthorizationPolicy(ProfileCustom.Define);
+			// Configurando o serviço do Swagger
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1",
+                    new Info
+                    {
+                        Title = "Seed",
+                        Version = "v1",
+                        Description = "Seed",
+
+                    });
+
+                var caminhoAplicacao = PlatformServices.Default.Application.ApplicationBasePath;
+                var nomeAplicacao = PlatformServices.Default.Application.ApplicationName;
+                var caminhoXmlDoc = Path.Combine(caminhoAplicacao, $"{nomeAplicacao}.xml");
+                c.IncludeXmlComments(caminhoXmlDoc);
+
+                c.AddSecurityDefinition("oauth2", new OAuth2Scheme
+                {
+                    Type = "oauth2",
+                    Flow = "implicit",
+                    AuthorizationUrl = "http://localhost:4000/connect/authorize",
+                    Scopes = new Dictionary<string, string>
+                    {
+                        { "ssosa", "ssosa" },
+                    }
+                });
+                c.OperationFilter<AuthorizeCheckOperationFilter>();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -116,6 +145,15 @@ namespace <#namespace#>.Api
 			app.UseAuthentication();
             app.AddTokenMiddlewareCustom();
             app.UseMvc();
+			//Ativando middlewares para uso do Swagger
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Seed");
+                c.OAuthClientId("swagger-dash");
+                c.OAuthAppName("swagger Dashboard");
+
+            });
 	    	app.UseCors("AllowAnyOrigin");
             AutoMapperConfig<#contextName#>.RegisterMappings();
         }
