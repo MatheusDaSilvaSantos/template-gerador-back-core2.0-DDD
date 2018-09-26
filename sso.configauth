@@ -154,8 +154,28 @@ namespace Sso.Server.Api
                         new Claim(JwtClaimTypes.Subject,"991")
                     },
                     AccessTokenLifetime = 43200
+                },
+				new Client
+                {
+                    ClientId = "swagger-dash",
+                    ClientName = "swagger Dashboard",
+                    ClientSecrets = { new Secret("segredo".Sha256()) },
+
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+                    RedirectUris = {
+                        "http://localhost:8122/swagger/oauth2-redirect.html",
+                    },
+
+                     AllowedScopes = {
+                        StandardScopes.OpenId,
+                        StandardScopes.Profile,
+                        StandardScopes.Email,
+                        "ssosa"
+                    },
+                    RequireConsent = false,
+                    AccessTokenLifetime = 43200
                 }
-          
             };
         }
 
