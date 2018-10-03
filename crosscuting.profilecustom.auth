@@ -74,7 +74,7 @@ namespace Seed.CrossCuting
 
             var tools = new List<Tool>
             {
-                new Tool { Icon = "fa fa-edit", Name = "Tool", Route = "#/Url", Key="Tool" },
+<#claimsforadmin#>
             };
 
             var _toolsForSubscriber = JsonConvert.SerializeObject(tools);
