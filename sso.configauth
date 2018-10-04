@@ -13,9 +13,9 @@ namespace Sso.Server.Api
 {
     public class Config
     {
-        public static User MakeUsersAdmin()
+        public static UserCredential MakeUsersAdmin()
         {
-            return new User
+            return new UserCredential
             {
                 SubjectId = "1",
                 Username = "adm",
@@ -179,9 +179,9 @@ namespace Sso.Server.Api
             };
         }
 
-        public static List<User> GetUsers()
+        public static List<UserCredential> GetUsers()
         {
-            return new List<User>()
+            return new List<UserCredential>()
             {
                 MakeUsersAdmin()
             };
