@@ -1,18 +1,17 @@
 using Common.Domain.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using <#namespace#>.Data.Map;
-using <#namespace#>.Domain.Entitys;
+using System.Linq;
 
 namespace <#namespace#>.Data.Context
 {
-    public class DbContext<#contextName#> : DbContext
+    public class DbContextMultiTenantcy : DbContext
     {
     
         private readonly CurrentUser _user;
         private readonly IConfiguration _config;
 
-        public DbContext<#contextName#>(DbContextOptions<DbContext<#contextName#>> options, CurrentUser user, IConfiguration config)
+        public DbContextMultiTenantcy(DbContextOptions<DbContext<#contextName#>> options, CurrentUser user, IConfiguration config)
             : base(options, user, config)
         {
             this._user = user;
