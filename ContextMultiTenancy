@@ -12,7 +12,7 @@ namespace <#namespace#>.Data.Context
         private readonly IConfiguration _config;
 
         public DbContextMultiTenantcy(DbContextOptions<DbContext<#contextName#>> options, CurrentUser user, IConfiguration config)
-            : base(options, user, config)
+            : base(options)
         {
             this._user = user;
             this._config = config;
