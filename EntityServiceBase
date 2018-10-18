@@ -137,13 +137,6 @@ namespace <#namespace#>.Domain.Services
 		protected virtual bool IsValid(<#className#> entity)
         {
             var isValid = true;
-            if (!this.DataAnnotationIsValid())
-            {
-                this._validationResult = entity.GetDomainValidation();
-                this._validationWarning = entity.GetDomainWarning();
-                isValid = false;
-            }
-
             if (!entity.IsValid())
             {
                 this._validationResult = entity.GetDomainValidation();
