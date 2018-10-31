@@ -51,7 +51,7 @@ namespace <#namespace#>.Api.Controllers
 
 <#ApiGet#>
 
-        [Authorize(Policy = "CanWrite")]
+        [Authorize(Policy = "CanSave")]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]<#className#>DtoSpecialized dto)
         {
@@ -69,7 +69,7 @@ namespace <#namespace#>.Api.Controllers
         }
 
 
-		[Authorize(Policy = "CanWrite")]
+		[Authorize(Policy = "CanEdit")]
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]<#className#>DtoSpecialized dto)
         {
