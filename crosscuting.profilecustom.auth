@@ -30,7 +30,7 @@ namespace <#namespace#>.CrossCuting
         {
             var _claims = user.GetClaims();
             var role = user.GetRole();
-            var typeTole = user.GetTypeRole();
+            var typeRole = user.GetTypeRole();
 
             if (typeRole.ToLower() == ETypeRole.Admin.ToString().ToLower())
                 _claims.AddRange(ClaimsForAdmin());
