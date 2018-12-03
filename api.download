@@ -1,13 +1,12 @@
-﻿using Common.API;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+using Common.Domain.Base;
+using Common.Domain.Interfaces;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System.IO;
-using Microsoft.AspNetCore.Hosting;
 using System.Threading.Tasks;
-using <#namespace#>.Api.Controllers;
 
 namespace <#namespace#>.Api.Controllers
 {
