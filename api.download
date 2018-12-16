@@ -34,9 +34,9 @@ namespace <#namespace#>.Api.Controllers
         public async Task<IActionResult> Get(string folder, string fileName)
         {
             if (this._configSettingsBase.EnabledStorage)
-                return await FileSystemDonwload(folder, fileName);
+				return await StorageSystemDonwload(folder, fileName);
 
-            return await StorageSystemDonwload(folder, fileName);
+            return await FileSystemDonwload(folder, fileName);
         }
 
         private async Task<IActionResult> StorageSystemDonwload(string folder, string fileName)
