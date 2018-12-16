@@ -30,7 +30,7 @@ namespace Sso.Server.Api
             {
                 new Claim(JwtClaimTypes.Name, name),
                 new Claim(JwtClaimTypes.Email, email),
-                new Claim("role", "admin"),
+                new Claim("role", JsonConvert.SerializeObject(new List<string> {"admin"})),
             };
         }
 
@@ -40,7 +40,7 @@ namespace Sso.Server.Api
             {
                 new Claim(JwtClaimTypes.Name, name),
                 new Claim(JwtClaimTypes.Email, email),
-                new Claim("role","tenant"),
+                new Claim("role", JsonConvert.SerializeObject(new List<string> {"tenant"})),
             };
         }
 
