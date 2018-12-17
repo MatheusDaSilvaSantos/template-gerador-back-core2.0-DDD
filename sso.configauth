@@ -31,6 +31,7 @@ namespace Sso.Server.Api
                 new Claim(JwtClaimTypes.Name, name),
                 new Claim(JwtClaimTypes.Email, email),
                 new Claim("role", JsonConvert.SerializeObject(new List<string> {"admin"})),
+		new Claim("typerole", "admin"),
             };
         }
 
@@ -41,6 +42,7 @@ namespace Sso.Server.Api
                 new Claim(JwtClaimTypes.Name, name),
                 new Claim(JwtClaimTypes.Email, email),
                 new Claim("role", JsonConvert.SerializeObject(new List<string> {"tenant"})),
+		new Claim("typerole", "tenant"),
             };
         }
 
@@ -54,7 +56,7 @@ namespace Sso.Server.Api
                     {
                         new Scope
                         {
-                            UserClaims = new List<string> {"name", "openid", "email", "role", "tools"},
+                            UserClaims = new List<string> {"name", "openid", "email", "role", "tools","typerole"},
                             Name = "ssosa",
                             Description = "sso basic",
                         }
