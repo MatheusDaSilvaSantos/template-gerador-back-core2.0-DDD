@@ -1,4 +1,4 @@
-using Common.API;
+﻿using Common.API;
 using Common.Domain.Base;
 using Common.Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -48,7 +48,9 @@ namespace <#namespace#>.Api.Controllers
             }
             catch (Exception ex)
             {
-                return result.ReturnCustomException(ex, " <#namespace#> - Upload");
+                var responseEx = result.ReturnCustomException(ex, " <#namespace#> - Upload");
+				<#apiRetrhow#>
+
             }
         }
 
@@ -66,7 +68,8 @@ namespace <#namespace#>.Api.Controllers
             }
             catch (Exception ex)
             {
-                return result.ReturnCustomException(ex, "<#namespace#> - upload");
+                var responseEx =  result.ReturnCustomException(ex, "<#namespace#> - upload");
+				<#apiRetrhow#>
             }
         }
 

@@ -11,7 +11,8 @@
             }
             catch (Exception ex)
             {
-                return result.ReturnCustomException(ex,"<#namespace#> - <#className#>", id);
+                var responseEx = result.ReturnCustomException(ex,"<#namespace#> - <#className#>", id);
+				<#apiRetrhow#>
             }
 
 		}

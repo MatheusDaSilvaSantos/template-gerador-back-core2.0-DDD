@@ -46,7 +46,8 @@ namespace <#namespace#>.Api.Controllers
             }
             catch (Exception ex)
             {
-                return result.ReturnCustomException(ex, "<#namespace#> - CurrentUser");
+                 var responseEx = result.ReturnCustomException(ex, "<#namespace#> - CurrentUser");
+				 <#apiRetrhow#>
             }
 
         }

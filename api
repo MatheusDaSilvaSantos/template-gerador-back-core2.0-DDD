@@ -43,7 +43,8 @@ namespace <#namespace#>.Api.Controllers
             }
             catch (Exception ex)
             {
-                return result.ReturnCustomException(ex,"<#namespace#> - <#className#>", filters, new ErrorMapCustom());
+                var responseEx = result.ReturnCustomException(ex,"<#namespace#> - <#className#>", filters, new ErrorMapCustom());
+				<#apiRetrhow#>
             }
 
         }
@@ -64,7 +65,8 @@ namespace <#namespace#>.Api.Controllers
             }
             catch (Exception ex)
             {
-                return result.ReturnCustomException(ex,"<#namespace#> - <#className#>", dto, new ErrorMapCustom());
+                var responseEx = result.ReturnCustomException(ex,"<#namespace#> - <#className#>", dto, new ErrorMapCustom());
+				<#apiRetrhow#>
             }
         }
 
@@ -82,7 +84,8 @@ namespace <#namespace#>.Api.Controllers
             }
             catch (Exception ex)
             {
-                return result.ReturnCustomException(ex,"<#namespace#> - <#className#>", dto, new ErrorMapCustom());
+                var responseEx = result.ReturnCustomException(ex,"<#namespace#> - <#className#>", dto, new ErrorMapCustom());
+				<#apiRetrhow#>
             }
         }
 
@@ -100,7 +103,8 @@ namespace <#namespace#>.Api.Controllers
             }
             catch (Exception ex)
             {
-                return result.ReturnCustomException(ex,"<#namespace#> - <#className#>", dto, new ErrorMapCustom());
+                var responseEx = result.ReturnCustomException(ex,"<#namespace#> - <#className#>", dto, new ErrorMapCustom());
+				<#apiRetrhow#>
             }
         }
 
