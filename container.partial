@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using <#namespace#>.Domain.Interfaces.Services;
 using <#namespace#>.Domain.Services;
 using Common.Domain.Model;
+using Common.Api;
 
 namespace <#namespace#>.Api
 {
