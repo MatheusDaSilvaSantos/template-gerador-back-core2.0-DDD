@@ -86,10 +86,14 @@ namespace <#namespace#>.Api
             ConfigContainer<#contextName#>.Config(services);			
 
             // Add framework services.
-            services.AddMvc(options => { options.ModelBinderProviders.Insert(0, new DateTimePtBrModelBinderProvider()); })
+            services.AddMvc(options => {
+                options.ModelBinderProviders.Insert(0, new DateTimePtBrModelBinderProvider());
+                options.ModelBinderProviders.Insert(1, new DecimalModelBinderProvider());
+            })
             .AddJsonOptions(options =>
             {
                 options.SerializerSettings.Converters.Add(new DateTimePtBrConverter());
+                options.SerializerSettings.Converters.Add(new DecimalPtBrConverter());
             });
 
 			//Policys
