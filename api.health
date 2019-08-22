@@ -1,6 +1,7 @@
 ﻿using Common.Domain;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Globalization;
 
 namespace <#namespace#>.Api.Controllers
 {
