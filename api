@@ -29,11 +29,11 @@ namespace <#namespace#>.Api.Controllers
 			this._env = env;
         }
 
-		[Authorize(Policy = "CanRead")]
+		[Authorize(Policy = "CanReadAll")]
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery]<#className#>Filter filters)
         {
-            var result = new HttpResult<<#className#>Dto>(this._logger);
+            var result = new HttpResult<<#className#>Dto>(this._logger, new ErrorMapCustom());
             try
             {
                 var searchResult = await this._app.GetByFilters(filters);
@@ -43,7 +43,7 @@ namespace <#namespace#>.Api.Controllers
             }
             catch (Exception ex)
             {
-                var responseEx = result.ReturnCustomException(ex,"<#namespace#> - <#className#>", filters, new ErrorMapCustom());
+                var responseEx = result.ReturnCustomException(ex,"<#namespace#> - <#className#>", filters);
 				<#apiRetrhow#>
             }
 
@@ -56,7 +56,7 @@ namespace <#namespace#>.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]<#className#>DtoSpecialized dto)
         {
-            var result = new HttpResult<<#className#>Dto>(this._logger);
+            var result = new HttpResult<<#className#>Dto>(this._logger, new ErrorMapCustom());
             try
             {
                 var returnModel = await this._app.Save(dto);
@@ -65,7 +65,7 @@ namespace <#namespace#>.Api.Controllers
             }
             catch (Exception ex)
             {
-                var responseEx = result.ReturnCustomException(ex,"<#namespace#> - <#className#>", dto, new ErrorMapCustom());
+                var responseEx = result.ReturnCustomException(ex,"<#namespace#> - <#className#>", dto);
 				<#apiRetrhow#>
             }
         }
@@ -75,7 +75,7 @@ namespace <#namespace#>.Api.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]<#className#>DtoSpecialized dto)
         {
-            var result = new HttpResult<<#className#>Dto>(this._logger);
+            var result = new HttpResult<<#className#>Dto>(this._logger, new ErrorMapCustom());
             try
             {
                 var returnModel = await this._app.SavePartial(dto);
@@ -84,7 +84,7 @@ namespace <#namespace#>.Api.Controllers
             }
             catch (Exception ex)
             {
-                var responseEx = result.ReturnCustomException(ex,"<#namespace#> - <#className#>", dto, new ErrorMapCustom());
+                var responseEx = result.ReturnCustomException(ex,"<#namespace#> - <#className#>", dto);
 				<#apiRetrhow#>
             }
         }
@@ -94,7 +94,7 @@ namespace <#namespace#>.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(<#KeyType#> id, <#className#>Dto dto)
         {
-            var result = new HttpResult<<#className#>Dto>(this._logger);
+            var result = new HttpResult<<#className#>Dto>(this._logger, new ErrorMapCustom());
             try
             {
 				<#setId#>
@@ -103,7 +103,7 @@ namespace <#namespace#>.Api.Controllers
             }
             catch (Exception ex)
             {
-                var responseEx = result.ReturnCustomException(ex,"<#namespace#> - <#className#>", dto, new ErrorMapCustom());
+                var responseEx = result.ReturnCustomException(ex,"<#namespace#> - <#className#>", dto);
 				<#apiRetrhow#>
             }
         }

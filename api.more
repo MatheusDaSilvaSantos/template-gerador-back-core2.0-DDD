@@ -3,6 +3,8 @@ using Common.API.Extensions;
 using Common.Domain.Base;
 using Common.Domain.Enums;
 using Common.Domain.Model;
+using Common.Domain.CompositeKey;
+using Common.Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -27,16 +29,20 @@ namespace <#namespace#>.Api.Controllers
         private readonly I<#className#>Repository _rep;
         private readonly I<#className#>ApplicationService _app;
 		private readonly ILogger _logger;
+		private readonly ICache _cache;
+		private readonly CacheHelper _cacheHelper;
 		private readonly EnviromentInfo _env;
 		private readonly CurrentUser _user;
 
-        public <#className#>MoreController(I<#className#>Repository rep, I<#className#>ApplicationService app, ILoggerFactory logger, EnviromentInfo env,CurrentUser user)
+        public <#className#>MoreController(I<#className#>Repository rep, I<#className#>ApplicationService app, ILoggerFactory logger, EnviromentInfo env, CurrentUser user, ICache cache)
         {
             this._rep = rep;
             this._app = app;
 			this._logger = logger.CreateLogger<<#className#>MoreController>();
 			this._env = env;
 			this._user = user;
+			this._cache = cache;
+			this._cacheHelper = new CacheHelper(this._cache);
         }
 
         [HttpGet]
@@ -45,54 +51,78 @@ namespace <#namespace#>.Api.Controllers
             var result = new HttpResult<dynamic>(this._logger);
             try
             {
-                if (filters.FilterBehavior == FilterBehavior.GetDataItem)
-                {
-                    var searchResult = await this._rep.GetDataItem(filters);
-                    return result.ReturnCustomResponse(searchResult, filters);
-                }
 
-				if (!this._user.GetClaims().GetTools().VerifyClaimsCanRead("<#className#>"))
+				if (filters.FilterBehavior == FilterBehavior.GetDataItem)
+				{
+					if (this._user.GetClaims().GetTools().VerifyClaimsCanReadDataItem("<#className#>"))
+					{
+							var searchResult = await this._rep.GetDataItem(filters);
+							return result.ReturnCustomResponse(searchResult, filters);
+					}
+					else
+					{
+						return new ObjectResult(null)
+						{
+							StatusCode = (int)HttpStatusCode.Forbidden
+						};
+					}
+				}
+				else if (this._user.GetClaims().GetTools().VerifyClaimsCanReadCustom("<#className#>"))
                 {
+					if (filters.FilterBehavior == FilterBehavior.GetDataCustom)
+					{
+						var searchResult = await this._rep.GetDataCustom(filters);
+						return result.ReturnCustomResponse(searchResult, filters);
+					}
+
+					if (filters.FilterBehavior == FilterBehavior.GetDataListCustom)
+					{
+						var filterKey = filters.CompositeKey(this._user);
+						if (filters.ByCache)
+							if (this._cache.ExistsKey(filterKey))
+								return result.ReturnCustomResponse(this._cache.Get<IEnumerable<object>>(filterKey), filters);
+
+						var searchResult = await this._rep.GetDataListCustom(filters);
+						this.AddCache(filters, filterKey, searchResult, "<#className#>");
+						return result.ReturnCustomResponse(searchResult, filters);
+					}
+
+					if (filters.FilterBehavior == FilterBehavior.GetDataListCustomPaging)
+					{
+						var filterKey = filters.CompositeKey(this._user);
+						if (filters.ByCache)
+							if (this._cache.ExistsKey(filterKey))
+								return result.ReturnCustomResponse(this._cache.Get<IEnumerable<object>>(filterKey), filters);
+
+						var paginatedResult = await this._rep.GetDataListCustomPaging(filters);
+						this.AddCache(filters, filterKey, paginatedResult.ResultPaginatedData, "<#className#>");
+						return result.ReturnCustomResponse(paginatedResult.ToSearchResult<dynamic>(), filters);
+					}
+
+				
+					if (filters.FilterBehavior == FilterBehavior.Export)
+					{
+						var searchResult = await this._rep.GetDataListCustom(filters);
+						var export = new ExportExcelCustom<dynamic>(filters);
+						var file = export.ExportFile(this.Response, searchResult, "<#className#>", this._env.RootPath);
+						return File(file, export.ContentTypeExcel(), export.GetFileName());
+					}
+
+                }
+				else
+				{
                     return new ObjectResult(null)
                     {
                         StatusCode = (int)HttpStatusCode.Forbidden
                     };
-                }
+				}
 
-
-                if (filters.FilterBehavior == FilterBehavior.GetDataCustom)
-                {
-                    var searchResult = await this._rep.GetDataCustom(filters);
-                    return result.ReturnCustomResponse(searchResult, filters);
-                }
-
-                if (filters.FilterBehavior == FilterBehavior.GetDataListCustom)
-                {
-                    var searchResult = await this._rep.GetDataListCustom(filters);
-                    return result.ReturnCustomResponse(searchResult, filters);
-                }
-
-				if (filters.FilterBehavior == FilterBehavior.GetDataListCustomPaging)
-                {
-                    var paginatedResult = await this._rep.GetDataListCustomPaging(filters);
-                    return result.ReturnCustomResponse(paginatedResult.ToSearchResult<dynamic>(), filters);
-                }
-
-				
-				if (filters.FilterBehavior == FilterBehavior.Export)
-                {
-					var searchResult = await this._rep.GetDataListCustom(filters);
-                    var export = new ExportExcelCustom<dynamic>(filters);
-                    var file = export.ExportFile(this.Response, searchResult, "<#className#>", this._env.RootPath);
-                    return File(file, export.ContentTypeExcel(), export.GetFileName());
-                }
-
-                throw new InvalidOperationException("invalid FilterBehavior");
+				throw new InvalidOperationException("invalid FilterBehavior");
 
             }
             catch (Exception ex)
             {
-                var responseEx = result.ReturnCustomException(ex,"<#namespace#> - <#className#>", filters, new ErrorMapCustom());
+                var responseEx = result.ReturnCustomException(ex,"<#namespace#> - <#className#>", filters);
 				<#apiRetrhow#>
             }
         }
@@ -101,7 +131,7 @@ namespace <#namespace#>.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]IEnumerable<<#className#>DtoSpecialized> dtos)
         {
-            var result = new HttpResult<<#className#>Dto>(this._logger);
+            var result = new HttpResult<<#className#>Dto>(this._logger, new ErrorMapCustom());
             try
             {
                 var returnModels = await this._app.Save(dtos);
@@ -110,7 +140,7 @@ namespace <#namespace#>.Api.Controllers
             }
             catch (Exception ex)
             {
-                var responseEx = result.ReturnCustomException(ex,"<#namespace#> - <#className#>", dtos, new ErrorMapCustom());
+                var responseEx = result.ReturnCustomException(ex,"<#namespace#> - <#className#>", dtos);
 				<#apiRetrhow#>
             }
 
@@ -120,7 +150,7 @@ namespace <#namespace#>.Api.Controllers
 		[HttpPut]
         public async Task<IActionResult> Put([FromBody]IEnumerable<<#className#>DtoSpecialized> dtos)
         {
-            var result = new HttpResult<<#className#>Dto>(this._logger);
+            var result = new HttpResult<<#className#>Dto>(this._logger, new ErrorMapCustom());
             try
             {
                 var returnModels = await this._app.SavePartial(dtos);
@@ -129,11 +159,21 @@ namespace <#namespace#>.Api.Controllers
             }
             catch (Exception ex)
             {
-                var responseEx = result.ReturnCustomException(ex, "<#namespace#> - <#className#>", dtos, new ErrorMapCustom());
+                var responseEx = result.ReturnCustomException(ex, "<#namespace#> - <#className#>", dtos);
 				<#apiRetrhow#>
             }
 
         }
+
+		private void AddCache(FilterBase filters, string filterKey, IEnumerable<dynamic> searchResult, string group)
+        {
+            if (filters.ByCache)
+            {
+                this._cache.Add(filterKey, searchResult, filters.CacheExpiresTime);
+                this._cacheHelper.AddTagCache(filterKey, group);
+            }
+        }
+
 
     }
 }
