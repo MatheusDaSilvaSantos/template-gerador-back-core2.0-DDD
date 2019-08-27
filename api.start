@@ -144,6 +144,8 @@ namespace <#namespace#>.Api
 			if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
+            loggerFactory.AddFile(Configuration.GetSection("Logging"));
+
 
             var supportedCultures = new[]
             {
