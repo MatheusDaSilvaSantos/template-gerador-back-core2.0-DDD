@@ -141,7 +141,9 @@ namespace <#namespace#>.Api
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IOptions<ConfigSettingsBase> configSettingsBase)
         {
 
-            app.UseDeveloperExceptionPage();
+			if (env.IsDevelopment())
+                app.UseDeveloperExceptionPage();
+
 
             var supportedCultures = new[]
             {
