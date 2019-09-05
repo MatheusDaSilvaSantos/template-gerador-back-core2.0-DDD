@@ -88,7 +88,7 @@ namespace <#namespace#>.Api
             var sp = services.BuildServiceProvider();
             var configuration = sp.GetService<IOptions<ConfigSettingsBase>>();
             Cors.Enable(services, configuration.Value.ClientAuthorityEndPoint.ToArray());
-			services.AddAutoMapper(AutoMapperConfigSeed.RegisterMappings());
+			services.AddAutoMapper(AutoMapperConfig<#contextName#>.RegisterMappings());
 
             // Add application services.
             ConfigContainer<#contextName#>.Config(services);			
