@@ -10,7 +10,7 @@ namespace <#namespace#>.Application.Config
             return new List<Type>
             {
                 typeof(DominioToDtoProfile<#contextName#>),
-                typeof(DominioToDtoProfileCustom<#contextName#>)
+                typeof(DominioToDtoProfile<#contextName#>Custom)
             }.ToArray();
         }
 	}
