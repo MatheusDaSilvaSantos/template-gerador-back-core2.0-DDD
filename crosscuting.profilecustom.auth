@@ -77,7 +77,7 @@ namespace <#namespace#>.CrossCuting
             };
         }
 		
-		public static Dictionary<string, object> ClaimsForAnonymous(int tenantId)
+		public static Dictionary<string, object> ClaimsForAnonymous()
         {
 
             var tools = new List<Tool>
