@@ -199,6 +199,20 @@ namespace Sso.Server.Api
                     },
                     RequireConsent = false,
                     AccessTokenLifetime = 43200
+                },
+				new Client
+                {
+                    ClientId = "Seed-spa-anonymous",
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    ClientSecrets = {
+                        new Secret("4aa288ca-1603-45c2-85c3-b41a08d2bd0a".Sha256())
+                    },
+                    AllowedScopes = {
+                        StandardScopes.OpenId,
+                        StandardScopes.Profile,
+                        StandardScopes.Email,
+                        "ssosa"
+                    },
                 }
             };
         }
