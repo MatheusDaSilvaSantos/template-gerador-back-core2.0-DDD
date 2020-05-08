@@ -113,9 +113,9 @@ namespace <#namespace#>.Api
                 c.SwaggerDoc("v1",
                     new Info
                     {
-                        Title = "Seed",
+                        Title = "Target.Intranet",
                         Version = "v1",
-                        Description = "Seed",
+                        Description = "Target.Intranet",
 
                     });
 
@@ -169,7 +169,7 @@ namespace <#namespace#>.Api
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Seed");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Target.Intranet");
                 c.OAuthClientId("swagger-dash");
                 c.OAuthAppName("swagger Dashboard");
 

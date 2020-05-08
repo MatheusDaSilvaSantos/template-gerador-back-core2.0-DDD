@@ -1,4 +1,4 @@
-using Common.Domain.Base;
+﻿using Common.Domain.Base;
 using IdentityModel;
 using IdentityServer4.Models;
 using Newtonsoft.Json;
@@ -202,7 +202,7 @@ namespace Sso.Server.Api
                 },
 				new Client
                 {
-                    ClientId = "Seed-spa-anonymous",
+                    ClientId = "Target.Intranet-spa-anonymous",
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     ClientSecrets = {
                         new Secret("4aa288ca-1603-45c2-85c3-b41a08d2bd0a".Sha256())
