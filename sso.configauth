@@ -148,9 +148,7 @@ namespace Sso.Server.Api
 
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
-                    RedirectUris = {
-                        "http://localhost:8123/signin-oidc",
-                    },
+                    RedirectUris = settings.RedirectUris.ToList(),
 
                      AllowedScopes = {
                         StandardScopes.OpenId,
@@ -187,9 +185,7 @@ namespace Sso.Server.Api
 
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
-                    RedirectUris = {
-                        "http://localhost:8122/swagger/oauth2-redirect.html",
-                    },
+                    RedirectUris = settings.RedirectUris.ToList(),
 
                      AllowedScopes = {
                         StandardScopes.OpenId,
