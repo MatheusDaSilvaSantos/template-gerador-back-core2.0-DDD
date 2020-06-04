@@ -57,7 +57,7 @@ namespace <#namespace#>.Api
 
             services.AddDistributedRedisCache(options =>
             {
-                options.Configuration = Configuration.GetSection("RedisConnStrings:<#contextName#>").Value;
+                options.Configuration = Configuration.GetSection("ConfigCache:Default").Value;
                 options.InstanceName = "<#contextName#>";
             });
 
