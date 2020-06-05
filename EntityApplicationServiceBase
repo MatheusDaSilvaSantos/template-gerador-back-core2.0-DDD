@@ -20,7 +20,7 @@ namespace <#namespace#>.Application
         protected readonly CurrentUser _user;
 
         public <#className#>ApplicationServiceBase(I<#className#>Service service, IUnitOfWork uow, ICache cache, CurrentUser user, IMapper mapper) :
-            base(service, uow, cache, mapper, _user)
+            base(service, uow, cache, mapper, user)
         {
             base.SetTagNameCache("<#className#>");
             this._validatorAnnotations = new ValidatorAnnotations<<#className#>Dto>();
